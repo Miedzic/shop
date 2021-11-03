@@ -37,7 +37,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
+            var loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
             return getAuthenticationManager().authenticate(usernamePasswordAuthenticationToken);
         } catch (IOException e) {
@@ -47,13 +47,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        Claims claims = new DefaultClaims()
+        var claims = new DefaultClaims()
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
                 .setSubject(authResult.getName());
         claims.put("authorities", authResult.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(",")));
-        String token = Jwts.builder()
+        var token = Jwts.builder()
                 .setClaims(claims)
                 .signWith(SignatureAlgorithm.HS512, "bardzo sekretny")
                 .compact();
