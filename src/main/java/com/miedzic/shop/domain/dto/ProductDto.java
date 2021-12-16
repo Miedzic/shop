@@ -29,4 +29,5 @@ public class ProductDto {
     @Length(max = 100)
     private String category;
     private Long cost;
+    private String path;
 }

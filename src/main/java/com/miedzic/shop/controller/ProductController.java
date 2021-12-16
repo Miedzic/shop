@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -27,13 +28,14 @@ public class ProductController {
 
     @PostMapping
     @Validated(Create.class)
-    public ProductDto saveProduct(@RequestBody @Valid ProductDto product) {
-        return productMapper.productToProductDto(productService.save(productMapper.productDtoToProduct(product)));
+    public ProductDto saveProduct(@RequestPart @Valid ProductDto product, @RequestPart MultipartFile file) {
+
+        return productMapper.productToProductDto(productService.save(productMapper.productDtoToProduct(product),file));
     }
 
     @PutMapping("/{id}")
-    public ProductDto updateProduct(@RequestBody ProductDto product, @PathVariable Long id) {
-        return productMapper.productToProductDto(productService.update(productMapper.productDtoToProduct(product), id));
+    public ProductDto updateProduct(@RequestPart @Valid ProductDto product, @PathVariable Long id, @RequestPart MultipartFile file ) {
+        return productMapper.productToProductDto(productService.update(productMapper.productDtoToProduct(product), id,file));
     }
 
     @DeleteMapping("/{id}")

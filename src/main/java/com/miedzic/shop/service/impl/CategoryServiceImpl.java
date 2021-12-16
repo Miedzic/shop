@@ -26,7 +26,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     // dirty update, jeśli obiekt z bazy danych zostanie zaaktualizowany w jakiś sposób to po wykonaniu funkcji zostanie zaaktualizowany w bazie danych
     public Category update(final Category category, final Long id) {
-        Category userDb = getById(id);
+        var userDb = getById(id);
         userDb.setName(category.getName());
         userDb.setNumberOfProducts(category.getNumberOfProducts());
         return userDb;

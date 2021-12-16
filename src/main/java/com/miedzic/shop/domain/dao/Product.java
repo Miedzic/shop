@@ -29,6 +29,7 @@ import java.time.LocalDateTime;
 @Builder
 @EntityListeners(AuditingEntityListener.class)
 @Audited
+@Table(indexes = @Index(name = "idx_name",columnList = "name",unique = true))
 public class Product implements IdentifiedDataSerializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,6 +46,7 @@ public class Product implements IdentifiedDataSerializable {
     private LocalDateTime lastModifiedDate;
     @LastModifiedBy
     private String lastModifiedBy;
+    private String path;
 
     @Override
     public int getFactoryId() {

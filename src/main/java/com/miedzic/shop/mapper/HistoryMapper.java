@@ -22,6 +22,7 @@ public interface HistoryMapper {
      @Mapping(source = "entity.name", target = "name")
      @Mapping(source = "entity.category", target = "category")
      @Mapping(source = "entity.cost", target = "cost")
+     @Mapping(source = "entity.path", target = "path")
      @Mapping(source = "requiredRevisionNumber", target = "revisionNumber")
      ProductDto revisionToProductDto(Revision<Integer, Product> revision);
 

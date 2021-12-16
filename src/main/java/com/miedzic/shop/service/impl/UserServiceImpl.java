@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     // dirty update, jeśli obiekt z bazy danych zostanie zaaktualizowany w jakiś sposób to po wykonaniu funkcji zostanie zaaktualizowany w bazie danych
     public User update(final User user, final Long id) {
-        User userDb = getById(id);
+        var userDb = getById(id);
         userDb.setEmail(user.getEmail());
         userDb.setFirstName(user.getFirstName());
         userDb.setLastName(user.getLastName());

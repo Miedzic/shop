@@ -11,3 +11,5 @@ spring:
       fail-on-empty-beans: false
   flyway:
     baseline-on-migrate: true
+file:
+  product: D:\Programowanie\pliki
