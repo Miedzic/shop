@@ -8,7 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.envers.Audited;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -16,7 +15,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -29,7 +27,7 @@ import java.time.LocalDateTime;
 @Builder
 @EntityListeners(AuditingEntityListener.class)
 @Audited
-@Table(indexes = @Index(name = "idx_name",columnList = "name",unique = true))
+@Table(indexes = @Index(name = "idx_name", columnList = "name", unique = true))
 public class Product implements IdentifiedDataSerializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,6 +63,7 @@ public class Product implements IdentifiedDataSerializable {
         objectDataOutput.writeString(category);
         objectDataOutput.writeLong(cost);
     }
+
     @Override
     public void readData(ObjectDataInput objectDataInput) throws IOException {
         this.id = objectDataInput.readLong();

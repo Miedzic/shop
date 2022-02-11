@@ -20,6 +20,7 @@ import javax.validation.Valid;
 public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
+
     @PreAuthorize("isAuthenticated() && (hasRole('ADMIN') || @securityService.hasAccessToUser(#id))")
     @GetMapping("/{id}")
     public UserDto getUserById(@PathVariable Long id) {
@@ -31,16 +32,20 @@ public class UserController {
     public UserDto saveUser(@RequestBody @Valid UserDto user) {
         return userMapper.userToUserDto(userService.save(userMapper.userDtoToUser(user)));
     }
-    @PreAuthorize("isAuthenticated() && (hasRole('ADMIN') || @securityService.hasAccessToUser(#id))") // hasAnyRole / isAnonymous
+
+    @PreAuthorize("isAuthenticated() && (hasRole('ADMIN') || @securityService.hasAccessToUser(#id))")
+    // hasAnyRole / isAnonymous
     @PutMapping("/{id}")
     public UserDto updateUser(@RequestBody UserDto user, @PathVariable Long id) {
         return userMapper.userToUserDto(userService.update(userMapper.userDtoToUser(user), id));
     }
+
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public void deleteUserById(@PathVariable Long id) {
         userService.deleteById(id);
     }
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public Page<UserDto> getUserPage(@RequestParam int page, @RequestParam int size) {

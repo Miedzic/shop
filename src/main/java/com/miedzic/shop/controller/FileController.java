@@ -16,20 +16,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/file")
 @RequiredArgsConstructor
- public class FileController {
+public class FileController {
     private final GeneratorFactory generatorFactory;
     private final GenericFactory<FileType, FileGeneratorStrategy> genericFactory;
+
     @GetMapping
-    public void generateFile(@RequestParam FileType fileType){
+    public void generateFile(@RequestParam FileType fileType) {
         generatorFactory.getStrategyByType(fileType).generateFile();
     }
+
     @GetMapping("/generator")
-    public ResponseEntity<byte[]> fileGeneratorTest(@RequestParam FileType fileType){
+    public ResponseEntity<byte[]> fileGeneratorTest(@RequestParam FileType fileType) {
         byte[] file = genericFactory.getStrategyByType(fileType).generateFile();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE);
         httpHeaders.set(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.length));
-        httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION,"attachment;filename=report."+fileType.name().toLowerCase() );
+        httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=report." + fileType.name().toLowerCase());
         return ResponseEntity.ok().headers(httpHeaders).body(file);
     }
 }

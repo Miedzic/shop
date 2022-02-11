@@ -14,7 +14,6 @@ public interface HistoryMapper {
      @Mapping(source = "entity.firstName", target = "firstName")
      @Mapping(source = "entity.lastName", target = "lastName")
      @Mapping(source = "entity.email", target = "email")
-     @Mapping(source = "entity.password", target = "password")
      @Mapping(source = "entity.premium", target = "premium")
      @Mapping(source = "requiredRevisionNumber", target = "revisionNumber")
      UserDto revisionToUserDto(Revision<Integer, User> revision);

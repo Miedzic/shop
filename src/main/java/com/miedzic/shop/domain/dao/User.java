@@ -1,9 +1,6 @@
 package com.miedzic.shop.domain.dao;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 import org.springframework.data.annotation.CreatedBy;
@@ -35,6 +32,8 @@ public class User {
     private String password;
     private boolean premium;
     @ManyToMany
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude // zapobiegnięcie potencjalnemu zapętlaniu toStringa/Equals/Hashcode spowodowany adnotacją @Data
     @JoinTable(name = "user_role", inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
     @CreatedDate

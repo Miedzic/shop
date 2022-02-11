@@ -2,6 +2,7 @@ package com.miedzic.shop.service.impl;
 
 import com.miedzic.shop.config.properties.FilePropertiesConfig;
 import com.miedzic.shop.domain.dao.Product;
+import com.miedzic.shop.helper.FileHelper;
 import com.miedzic.shop.repository.ProductRepository;
 import com.miedzic.shop.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -26,17 +27,19 @@ import java.nio.file.StandardCopyOption;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final FilePropertiesConfig filePropertiesConfig;
-
+    private final FileHelper fileHelper;
     @SneakyThrows
     @Override
     public Product save(final Product product, MultipartFile file) {
         //jeśli jest id to robi selecta sprawdzającego czy obiekt w bazie istnieje po tym id, update/insert
         productRepository.save(product);
       //  String[] split = file.getOriginalFilename().split("\\.");
-        String extension = FilenameUtils.getExtension(file.toString());
+
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
       //  Path path = Paths.get(filePropertiesConfig.getProduct(), product.getName() + "." + split[split.length - 1]);
         Path path = Paths.get(filePropertiesConfig.getProduct(), product.getName() + "." + extension);
-        Files.copy(file.getInputStream(), path);
+        //Files.copy(file.getInputStream(), path);
+        fileHelper.fileCopy(file.getInputStream(), path);
         product.setPath(path.toString());
         return productRepository.save(product);
     }

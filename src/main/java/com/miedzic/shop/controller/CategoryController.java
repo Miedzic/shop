@@ -1,11 +1,8 @@
 package com.miedzic.shop.controller;
 
-import com.miedzic.shop.domain.dao.Category;
-import com.miedzic.shop.domain.dao.Product;
 import com.miedzic.shop.domain.dto.CategoryDto;
 import com.miedzic.shop.mapper.CategoryMapper;
 import com.miedzic.shop.service.CategoryService;
-import com.miedzic.shop.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,12 +22,12 @@ public class CategoryController {
 
     @PostMapping
     public CategoryDto saveProduct(@RequestBody CategoryDto category) {
-    return categoryMapper.categoryToCategoryDto(categoryService.save(categoryMapper.categoryDtoToCategory(category)));
+        return categoryMapper.categoryToCategoryDto(categoryService.save(categoryMapper.categoryDtoToCategory(category)));
     }
 
     @PutMapping("/{id}")
     public CategoryDto updateProduct(@RequestBody CategoryDto category, @PathVariable Long id) {
-        return categoryMapper.categoryToCategoryDto(categoryService.update(categoryMapper.categoryDtoToCategory(category),id));
+        return categoryMapper.categoryToCategoryDto(categoryService.update(categoryMapper.categoryDtoToCategory(category), id));
     }
 
     @DeleteMapping("/{id}")

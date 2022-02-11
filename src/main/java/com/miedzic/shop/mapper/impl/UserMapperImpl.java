@@ -7,12 +7,10 @@
 //
 //@Component
 //public class UserMapperImpl implements UserMapper {
-//    @Override
 //    public UserDto userToUserDto(User user) {
 //        return UserDto.builder()
 //                .id(user.getId())
 //                .firstName(user.getFirstName())
-//                .lastName(user.getLastName())
 //                .email(user.getEmail())
 //                .premium(user.isPremium())
 //                .build();
@@ -24,7 +22,6 @@
 //                .id(user.getId())
 //                .firstName(user.getFirstName())
 //                .lastName(user.getLastName())
-//                .email(user.getEmail())
 //                .premium(user.isPremium())
 //                .password(user.getPassword())
 //                .build();

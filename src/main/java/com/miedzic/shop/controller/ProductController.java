@@ -30,12 +30,12 @@ public class ProductController {
     @Validated(Create.class)
     public ProductDto saveProduct(@RequestPart @Valid ProductDto product, @RequestPart MultipartFile file) {
 
-        return productMapper.productToProductDto(productService.save(productMapper.productDtoToProduct(product),file));
+        return productMapper.productToProductDto(productService.save(productMapper.productDtoToProduct(product), file));
     }
 
     @PutMapping("/{id}")
-    public ProductDto updateProduct(@RequestPart @Valid ProductDto product, @PathVariable Long id, @RequestPart MultipartFile file ) {
-        return productMapper.productToProductDto(productService.update(productMapper.productDtoToProduct(product), id,file));
+    public ProductDto updateProduct(@RequestPart @Valid ProductDto product, @PathVariable Long id, @RequestPart MultipartFile file) {
+        return productMapper.productToProductDto(productService.update(productMapper.productDtoToProduct(product), id, file));
     }
 
     @DeleteMapping("/{id}")
