@@ -3,6 +3,7 @@ package com.miedzic.shop.controller;
 import com.miedzic.shop.domain.dto.ProductDto;
 import com.miedzic.shop.mapper.ProductMapper;
 import com.miedzic.shop.service.ProductService;
+import com.miedzic.shop.validator.ExtensionValid;
 import com.miedzic.shop.validator.group.Create;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,13 +29,13 @@ public class ProductController {
 
     @PostMapping
     @Validated(Create.class)
-    public ProductDto saveProduct(@RequestPart @Valid ProductDto product, @RequestPart MultipartFile file) {
+    public ProductDto saveProduct(@RequestPart @Valid ProductDto product, @RequestPart @Valid @ExtensionValid(groups = Create.class)  MultipartFile file) {
 
         return productMapper.productToProductDto(productService.save(productMapper.productDtoToProduct(product), file));
     }
 
     @PutMapping("/{id}")
-    public ProductDto updateProduct(@RequestPart @Valid ProductDto product, @PathVariable Long id, @RequestPart MultipartFile file) {
+    public ProductDto updateProduct(@RequestPart @Valid ProductDto product, @PathVariable Long id,@RequestPart @Valid @ExtensionValid(groups = Create.class)  MultipartFile file) {
         return productMapper.productToProductDto(productService.update(productMapper.productDtoToProduct(product), id, file));
     }
 

@@ -1,6 +1,7 @@
 package com.miedzic.shop.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.miedzic.shop.validator.ExtensionValid;
 import com.miedzic.shop.validator.ProductValid;
 import com.miedzic.shop.validator.group.Create;
 import lombok.AllArgsConstructor;
@@ -28,5 +29,6 @@ public class ProductDto {
     @Length(max = 100)
     private String category;
     private Long cost;
+
     private String path;
 }

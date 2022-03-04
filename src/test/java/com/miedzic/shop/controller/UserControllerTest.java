@@ -15,6 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -84,13 +85,15 @@ class UserControllerTest {
         mockMvc.perform(post("/api/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsBytes(UserDto.builder()
-                        .firstName("mati")
-                        .lastName("d")
-                        .email("matim98@tlen.pl")
+                        .firstName("")
+                        .lastName("")
+                        .email("")
                         .password("123")
                         .confirmPassword("123")
                         .premium(false)
                         .build())))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$[*].field",containsInAnyOrder("firstName","lastName","email")))
+                .andExpect(jsonPath("$[*].message",containsInAnyOrder("last name cannot be blank","must not be blank","must not be blank")));
     }
 }

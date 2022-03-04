@@ -9,8 +9,10 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.ConstraintViolationException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,6 +48,18 @@ public class AdviceController {
                     return new FieldErrorDto(fieldError.getField(), fieldError.getDefaultMessage());
                 })
                 .collect(Collectors.toList());
+    }
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto handleConstraintViolationException(ConstraintViolationException e){
+        log.error("not valid argument",e);
+        return new ErrorDto(e.getMessage());
+    }
+    @ExceptionHandler(MissingServletRequestPartException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto handleMissingServletRequestPartException(MissingServletRequestPartException e){
+        log.warn("required request part is not present",e);
+        return new ErrorDto(e.getMessage());
     }
 }
 // object error nie jest field errorem :?

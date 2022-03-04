@@ -5,6 +5,7 @@ import com.miedzic.shop.domain.dao.Product;
 import com.miedzic.shop.helper.FileHelper;
 import com.miedzic.shop.repository.ProductRepository;
 import com.miedzic.shop.service.ProductService;
+import com.miedzic.shop.validator.ExtensionValid;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -28,15 +29,17 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final FilePropertiesConfig filePropertiesConfig;
     private final FileHelper fileHelper;
+
     @SneakyThrows
     @Override
     public Product save(final Product product, MultipartFile file) {
         //jeśli jest id to robi selecta sprawdzającego czy obiekt w bazie istnieje po tym id, update/insert
         productRepository.save(product);
-      //  String[] split = file.getOriginalFilename().split("\\.");
+        //  String[] split = file.getOriginalFilename().split("\\.");
 
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-      //  Path path = Paths.get(filePropertiesConfig.getProduct(), product.getName() + "." + split[split.length - 1]);
+
+        //  Path path = Paths.get(filePropertiesConfig.getProduct(), product.getName() + "." + split[split.length - 1]);
         Path path = Paths.get(filePropertiesConfig.getProduct(), product.getName() + "." + extension);
         //Files.copy(file.getInputStream(), path);
         fileHelper.fileCopy(file.getInputStream(), path);
@@ -53,9 +56,9 @@ public class ProductServiceImpl implements ProductService {
         productDb.setCategory(product.getCategory());
         productDb.setCost(product.getCost());
         String oldPath = productDb.getPath();
-       // String[] split = file.getOriginalFilename().split("\\.");
+        // String[] split = file.getOriginalFilename().split("\\.");
         String extension = FilenameUtils.getExtension(file.toString());
-        Path path = Paths.get(filePropertiesConfig.getProduct(), productDb.getName() + "." +extension);
+        Path path = Paths.get(filePropertiesConfig.getProduct(), productDb.getName() + "." + extension);
         try {
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
             productDb.setPath(path.toString());

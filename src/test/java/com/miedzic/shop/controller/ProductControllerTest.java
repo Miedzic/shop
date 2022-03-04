@@ -12,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -28,7 +29,7 @@ public class ProductControllerTest {
 
     @Test
     void shouldSaveProduct() throws Exception {
-        MockMultipartFile file = new MockMultipartFile("file", "plik.csv", MediaType.APPLICATION_OCTET_STREAM_VALUE, new byte[0]);
+        MockMultipartFile file = new MockMultipartFile("file", "plik.png", MediaType.APPLICATION_OCTET_STREAM_VALUE, new byte[0]);
         MockMultipartFile product = new MockMultipartFile("product", "", MediaType.APPLICATION_JSON_VALUE, objectMapper.writeValueAsBytes(ProductDto.builder()
                 .name("szafa")
                 .category("meble")
@@ -47,11 +48,11 @@ public class ProductControllerTest {
                 .andExpect(jsonPath("$.category").value("meble"))
                 .andExpect(jsonPath("$.cost").value(100L))
                 .andExpect(jsonPath("$.revisionNumber").doesNotExist())
-                .andExpect(jsonPath("$.path").value("target\\szafa.csv"));
+                .andExpect(jsonPath("$.path").value("target\\szafa.png"));
     }
 
     @Test
-    void shouldNotSaveProduct() throws Exception {
+    void shouldNotSaveProductWithoutImage() throws Exception {
         MockMultipartFile product = new MockMultipartFile("product", "", MediaType.APPLICATION_JSON_VALUE, objectMapper.writeValueAsBytes(ProductDto.builder()
                 .name("szafa")
                 .category("meble")
@@ -64,10 +65,11 @@ public class ProductControllerTest {
                             return processor;
                         }))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$").doesNotExist());
+                .andExpect(jsonPath("$.message").value("Required request part 'file' is not present"));
     }
 
-    void shouldNotSaveWhenIncorrectData() throws Exception {
+    @Test
+    void shouldNotSaveProductWhenIncorrectData() throws Exception {
         MockMultipartFile file = new MockMultipartFile("file", "plik.csv", MediaType.APPLICATION_OCTET_STREAM_VALUE, new byte[0]);
         MockMultipartFile product = new MockMultipartFile("product", "", MediaType.APPLICATION_JSON_VALUE, objectMapper.writeValueAsBytes(ProductDto.builder()
                 .name("")
@@ -80,12 +82,32 @@ public class ProductControllerTest {
                 .cost(100L)
                 .build()));
         mockMvc.perform(multipart("/api/products")
-                .file(product)
-                .with(processor -> {
-                    processor.setMethod("POST");
-                    return processor;
-                }))
+                        .file(product)
+                        .with(processor -> {
+                            processor.setMethod("POST");
+                            return processor;
+                        }))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$").doesNotExist());
+                .andExpect(jsonPath("$[*].field", containsInAnyOrder("name", "category")))
+                .andExpect(jsonPath("$[*].message", containsInAnyOrder("must not be blank", "length must be between 0 and 100")));
+    }
+
+    @Test
+    void shouldNotSaveProductWithInvalidExtension() throws Exception {
+        MockMultipartFile file = new MockMultipartFile("file", "plik.xds", MediaType.APPLICATION_OCTET_STREAM_VALUE, new byte[0]);
+        MockMultipartFile product = new MockMultipartFile("product", "", MediaType.APPLICATION_JSON_VALUE, objectMapper.writeValueAsBytes(ProductDto.builder()
+                .name("fafga")
+                .category("afaa")
+                .cost(100L)
+                .build()));
+        mockMvc.perform(multipart("/api/products")
+                        .file(file)
+                        .file(product)
+                        .with(processor -> {
+                            processor.setMethod("POST");
+                            return processor;
+                        }))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("saveProduct.file: Wrong file extension!"));
     }
 }
