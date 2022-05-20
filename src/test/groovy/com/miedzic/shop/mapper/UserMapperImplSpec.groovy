@@ -41,17 +41,19 @@ class UserMapperImplSpec extends Specification {
         result.email == userDto.email
         result.premium == userDto.premium
     }
-   /* def "Should confirm password"(){
-        given:
-        def userDto = new UserDto(10,10,"Mateusz","Dziedzic","matim98@tlen.pl","123456",true,"123456")
-        expect:
-        userDto.password == userDto.confirmPassword
-    }*/
     def "Should check if user is Null"() {
         given:
         def user = null
         when:
         def result = userMapperImpl.userToUserDto(user)
+        then:
+        result == null
+    }
+    def "Should check if userDTO is Null"() {
+        given:
+        def userDTO = null
+        when:
+        def result = userMapperImpl.userDtoToUser(userDTO)
         then:
         result == null
     }

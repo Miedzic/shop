@@ -57,13 +57,14 @@ public class ProductServiceImpl implements ProductService {
         productDb.setCost(product.getCost());
         String oldPath = productDb.getPath();
         // String[] split = file.getOriginalFilename().split("\\.");
-        String extension = FilenameUtils.getExtension(file.toString());
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         Path path = Paths.get(filePropertiesConfig.getProduct(), productDb.getName() + "." + extension);
         try {
-            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            //Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            fileHelper.fileCopy(file.getInputStream(),path);
             productDb.setPath(path.toString());
             if (!oldPath.equals(path.toString())) {
-                Files.delete(Paths.get(oldPath));
+                fileHelper.fileDelete(Paths.get(oldPath));
             }
         } catch (IOException e) {
             log.error("file could not be updated", e);

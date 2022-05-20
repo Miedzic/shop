@@ -1,7 +1,9 @@
 package com.miedzic.shop.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.miedzic.shop.domain.dao.Product;
 import com.miedzic.shop.domain.dto.ProductDto;
+import com.miedzic.shop.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -26,6 +28,8 @@ public class ProductControllerTest {
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private ProductRepository productRepository;
 
     @Test
     void shouldSaveProduct() throws Exception {
@@ -49,6 +53,9 @@ public class ProductControllerTest {
                 .andExpect(jsonPath("$.cost").value(100L))
                 .andExpect(jsonPath("$.revisionNumber").doesNotExist())
                 .andExpect(jsonPath("$.path").value("target\\szafa.png"));
+
+
+
     }
 
     @Test

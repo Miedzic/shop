@@ -33,7 +33,6 @@ class CategoryMapperImplSpec extends Specification {
         result.numberOfProducts == categoryDto.numberOfProducts
 
     }
-
     def "Should check if category is Null"() {
         given:
         def category = null

@@ -45,4 +45,12 @@ class HistoryMapperImplSpec extends Specification {
         result.cost == product.cost
         result.revisionNumber == revision.requiredRevisionNumber
     }
+    def "Should check if revision is Null"() {
+        given:
+        def revision = null
+        when:
+        def result = historyMapperImpl.revisionToProductDto(revision)
+        then:
+        result == null
+    }
 }

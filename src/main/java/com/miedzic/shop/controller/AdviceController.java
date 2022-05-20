@@ -44,8 +44,11 @@ public class AdviceController {
         /*   List<FieldErrorDto> list = */
         return e.getBindingResult().getAllErrors().stream()
                 .map(objectError -> {
-                    FieldError fieldError = (FieldError) objectError;
-                    return new FieldErrorDto(fieldError.getField(), fieldError.getDefaultMessage());
+                    if(objectError instanceof FieldError){
+                        FieldError fieldError = (FieldError) objectError;
+                        return new FieldErrorDto(fieldError.getField(), fieldError.getDefaultMessage());
+                    }
+                    return new FieldErrorDto(null,objectError.getDefaultMessage());
                 })
                 .collect(Collectors.toList());
     }

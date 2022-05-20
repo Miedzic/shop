@@ -41,4 +41,12 @@ class ProductMapperImplSpec extends Specification{
         then:
         result == null
     }
+    def "should check if productDTO is Null"(){
+        given:
+        def productDTO = null
+        when:
+        def result = productMapperImpl.productDtoToProduct(productDTO)
+        then:
+        result == null
+    }
 }

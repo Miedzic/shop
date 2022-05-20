@@ -36,7 +36,7 @@ public class UserController {
     @PreAuthorize("isAuthenticated() && (hasRole('ADMIN') || @securityService.hasAccessToUser(#id))")
     // hasAnyRole / isAnonymous
     @PutMapping("/{id}")
-    public UserDto updateUser(@RequestBody UserDto user, @PathVariable Long id) {
+    public UserDto updateUser(@RequestBody @Valid UserDto user, @PathVariable Long id) {
         return userMapper.userToUserDto(userService.update(userMapper.userDtoToUser(user), id));
     }
 

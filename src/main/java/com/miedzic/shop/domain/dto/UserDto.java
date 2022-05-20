@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
-@PasswordValid
+@PasswordValid(groups = Create.class)
 //@FirstnameValid
 public class UserDto {
     @Null(groups = Create.class)
@@ -33,7 +33,7 @@ public class UserDto {
     @NotBlank
     @Email
     private String email;
-    @NotBlank
+    @NotBlank(groups = Create.class)
     private String password;
     private boolean premium;
     private String confirmPassword;
