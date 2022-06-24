@@ -32,7 +32,7 @@ public class CategoryControllerTest {
     private MockMvc mockMvc;
     @Autowired
     private CategoryRepository categoryRepository;
-
+    @WithMockUser(roles = "ADMIN")
     @Test
     void shouldSaveCategory() throws Exception{
         mockMvc.perform(post("/api/controllers")
@@ -59,6 +59,7 @@ public class CategoryControllerTest {
             .andExpect(jsonPath("$.name").value("meble"))
             .andExpect(jsonPath("$.numberOfProducts").value(10));
     }
+    @WithMockUser(roles = "ADMIN")
     @Test
     void shouldDeleteCategory() throws Exception {
         Category category = categoryRepository.save(Category.builder()
@@ -71,6 +72,7 @@ public class CategoryControllerTest {
                 .andExpect(jsonPath("$.name").doesNotExist())
                 .andExpect(jsonPath("$.numberOfProducts").doesNotExist());
     }
+    @WithMockUser(roles = "ADMIN")
     @Test
     void shouldUpdateCategory() throws Exception{
         Category category = categoryRepository.save(Category.builder()

@@ -1,7 +1,6 @@
 package com.miedzic.shop.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.miedzic.shop.domain.dao.Product;
 import com.miedzic.shop.domain.dto.ProductDto;
 import com.miedzic.shop.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
@@ -10,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -31,6 +31,7 @@ public class ProductControllerTest {
     @Autowired
     private ProductRepository productRepository;
 
+    @WithMockUser(roles = "ADMIN")
     @Test
     void shouldSaveProduct() throws Exception {
         MockMultipartFile file = new MockMultipartFile("file", "plik.png", MediaType.APPLICATION_OCTET_STREAM_VALUE, new byte[0]);
@@ -55,9 +56,9 @@ public class ProductControllerTest {
                 .andExpect(jsonPath("$.path").value("target\\szafa.png"));
 
 
-
     }
 
+    @WithMockUser(roles = "ADMIN")
     @Test
     void shouldNotSaveProductWithoutImage() throws Exception {
         MockMultipartFile product = new MockMultipartFile("product", "", MediaType.APPLICATION_JSON_VALUE, objectMapper.writeValueAsBytes(ProductDto.builder()
@@ -75,6 +76,7 @@ public class ProductControllerTest {
                 .andExpect(jsonPath("$.message").value("Required request part 'file' is not present"));
     }
 
+    @WithMockUser(roles = "ADMIN")
     @Test
     void shouldNotSaveProductWhenIncorrectData() throws Exception {
         MockMultipartFile file = new MockMultipartFile("file", "plik.csv", MediaType.APPLICATION_OCTET_STREAM_VALUE, new byte[0]);
@@ -99,6 +101,7 @@ public class ProductControllerTest {
                 .andExpect(jsonPath("$[*].message", containsInAnyOrder("must not be blank", "length must be between 0 and 100")));
     }
 
+    @WithMockUser(roles = "ADMIN")
     @Test
     void shouldNotSaveProductWithInvalidExtension() throws Exception {
         MockMultipartFile file = new MockMultipartFile("file", "plik.xds", MediaType.APPLICATION_OCTET_STREAM_VALUE, new byte[0]);
