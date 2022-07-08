@@ -22,14 +22,17 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final MailServiceImpl mailService;
 
     @Override
     public User save(final User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         roleRepository.findByName("ROLE_USER").ifPresent(role-> user.setRoles(Collections.singletonList(role))); //zawsze musimy prefix + docelowa nazwa roli ROLE_[rola]
-
+        userRepository.save(user);
+        mailService.sendEmail(user.getEmail());
         //jeśli jest id to robi selecta sprawdzającego czy obiekt w bazie istnieje po tym id, update/insert
-        return userRepository.save(user);
+        return user;
+
     }
 
     @Override

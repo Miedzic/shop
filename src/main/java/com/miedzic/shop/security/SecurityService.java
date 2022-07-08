@@ -1,5 +1,6 @@
 package com.miedzic.shop.security;
 
+import com.miedzic.shop.service.ProductService;
 import com.miedzic.shop.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
