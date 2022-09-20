@@ -22,7 +22,8 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@Service
+//@Service
+@Deprecated
 public class LoginServiceImpl implements LoginService {
     private final AuthenticationManager authenticationManager;
     public TokenDto login(final String email, final String password) throws AuthenticationException {

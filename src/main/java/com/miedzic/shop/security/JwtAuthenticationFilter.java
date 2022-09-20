@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.stream.Collectors;
-
+@Deprecated
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final ObjectMapper objectMapper;
 

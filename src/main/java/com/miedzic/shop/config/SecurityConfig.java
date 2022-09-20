@@ -16,9 +16,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-@EnableWebSecurity
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableWebSecurity
 @RequiredArgsConstructor
+@Deprecated
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;

@@ -6,7 +6,11 @@ import org.springframework.data.repository.history.RevisionRepository;
 
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User, Long>, RevisionRepository<User,Long,Integer> {
+public interface UserRepository extends JpaRepository<User, Long>, RevisionRepository<User, Long, Integer> {
     Optional<User> findByEmail(String email);
+
+    Optional<User> findByEmailAndConfirmationTokenIsNull(String email);
+
+    Optional<User> findByConfirmationToken(String token);
 
 }

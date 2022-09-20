@@ -4,8 +4,9 @@ import com.miedzic.shop.domain.dao.Product;
 import com.miedzic.shop.flyweight.generic.strategy.file.FileGeneratorStrategy;
 import com.miedzic.shop.flyweight.model.FileType;
 import com.miedzic.shop.repository.ProductRepository;
+import com.miedzic.shop.security.SecurityUtils;
+import com.miedzic.shop.service.impl.MailServiceImpl;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -23,7 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class XlsFileGenerator implements FileGeneratorStrategy {
     private final ProductRepository productRepository;
-
+    private final MailServiceImpl mailService;
     @Override
     public byte[] generateFile() {
         List<Product> allProducts = productRepository.findAll();
@@ -56,7 +58,9 @@ public class XlsFileGenerator implements FileGeneratorStrategy {
             sheet.setAutoFilter(new CellRangeAddress(0, allProducts.size(), 0, 7));
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             workbook.write(byteArrayOutputStream);
-            return byteArrayOutputStream.toByteArray();
+            byte[] file = byteArrayOutputStream.toByteArray();
+            mailService.sendEmail(SecurityUtils.getCurrentUserEmail(), "send file", Collections.emptyMap(),"excelek.xls", file);
+            return file;
         } catch (IOException e) {
             log.error("error during generating excel", e);
         }

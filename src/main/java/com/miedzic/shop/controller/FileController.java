@@ -4,10 +4,13 @@ import com.miedzic.shop.flyweight.generic.GenericFactory;
 import com.miedzic.shop.flyweight.generic.strategy.file.FileGeneratorStrategy;
 import com.miedzic.shop.flyweight.model.FileType;
 import com.miedzic.shop.flyweight.standard.GeneratorFactory;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +29,8 @@ public class FileController {
     }
 
     @GetMapping("/generator")
+    @PreAuthorize("isAuthenticated()")
+    @Operation(security = @SecurityRequirement(name = "bearer token"))
     public ResponseEntity<byte[]> fileGeneratorTest(@RequestParam FileType fileType) {
         byte[] file = genericFactory.getStrategyByType(fileType).generateFile();
         HttpHeaders httpHeaders = new HttpHeaders();

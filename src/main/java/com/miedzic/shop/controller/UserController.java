@@ -30,6 +30,7 @@ public class UserController {
         return userMapper.userToUserDto(userService.getById(id));
     }
 
+
     @PostMapping
     @Validated(Create.class)
     public UserDto saveUser(@RequestBody @Valid UserDto user) {
@@ -56,5 +57,9 @@ public class UserController {
     @GetMapping
     public Page<UserDto> getUserPage(@RequestParam int page, @RequestParam int size) {
         return userService.getPage(PageRequest.of(page, size)).map(userMapper::userToUserDto);
+    }
+    @GetMapping("/confirm")
+    public void confirmUser(@RequestParam String token ){
+        userService.confirmByToken(token);
     }
 }

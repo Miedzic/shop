@@ -16,4 +16,6 @@ public interface UserService {
     Page<User> getPage(Pageable pageable);
 
     User getCurrentUser();
+
+    void confirmByToken(String token);
 }

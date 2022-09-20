@@ -42,9 +42,9 @@ class CategoryServiceImplSpec extends Specification {
 
     def 'Should update category'() {
         given:
+        def categoryDB = new Category(10, "meble", 6)
         def category = new Category(10, "meble", 5)
         def id = 10;
-        def categoryDB = new Category(10, "meble", 6)
         categoryRepository.getById(id) >> categoryDB
 
         when:

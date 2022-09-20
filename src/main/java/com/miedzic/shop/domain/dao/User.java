@@ -44,7 +44,7 @@ public class User {
     private LocalDateTime lastModifiedDate;
     @LastModifiedBy
     private String lastModifiedBy;
-
+    private String confirmationToken;
 }
 
 

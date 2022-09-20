@@ -1,13 +1,13 @@
 package com.miedzic.shop.mapper;
 
 import com.miedzic.shop.domain.dao.Template;
-import com.miedzic.shop.domain.dto.TemplateDTO;
+import com.miedzic.shop.domain.dto.TemplateDto;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface TemplateMapper {
-    Template templateDtoToTemplate(TemplateDTO dto);
+    Template templateDtoToTemplate(TemplateDto dto);
 
-    TemplateDTO templateToTemplateDTO(Template template);
+    TemplateDto templateToTemplateDTO(Template template);
 
 }

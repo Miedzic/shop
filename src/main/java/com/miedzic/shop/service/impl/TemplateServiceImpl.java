@@ -6,7 +6,7 @@ import com.miedzic.shop.service.TemplateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import javax.transaction.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,17 +24,17 @@ public class TemplateServiceImpl implements TemplateService {
     }
 
     @Override
+    @Transactional
     public Template update(final Template template, Long id) {
-    Template templateDB = getById(id);
-    templateDB.setId(template.getId());
-    templateDB.setName(template.getName());
-    templateDB.setSubject(template.getSubject());
-    templateDB.setBody(template.getBody());
-    return templateDB;
+        Template templateDB = getById(id);
+        templateDB.setName(template.getName());
+        templateDB.setSubject(template.getSubject());
+        templateDB.setBody(template.getBody());
+        return templateDB;
     }
 
     @Override
-    public Template save(final Template template){
+    public Template save(final Template template) {
         return templateRepository.save(template);
     }
 
