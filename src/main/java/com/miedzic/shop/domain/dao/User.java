@@ -18,9 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Builder
-@EntityListeners(AuditingEntityListener.class)
 @Audited
-public class User {
+public class User extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,14 +35,6 @@ public class User {
     @EqualsAndHashCode.Exclude // zapobiegnięcie potencjalnemu zapętlaniu toStringa/Equals/Hashcode spowodowany adnotacją @Data
     @JoinTable(name = "user_role", inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
-    @CreatedDate
-    private LocalDateTime createdDate;
-    @CreatedBy
-    private String createdBy;
-    @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
-    @LastModifiedBy
-    private String lastModifiedBy;
     private String confirmationToken;
 }
 

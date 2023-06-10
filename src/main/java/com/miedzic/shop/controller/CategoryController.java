@@ -25,21 +25,21 @@ public class CategoryController {
     }
 
     @Operation(security = @SecurityRequirement(name = "bearer token"))
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     public CategoryDto saveProduct(@RequestBody CategoryDto category) {
         return categoryMapper.categoryToCategoryDto(categoryService.save(categoryMapper.categoryDtoToCategory(category)));
     }
 
     @Operation(security = @SecurityRequirement(name = "bearer token"))
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/{id}")
     public CategoryDto updateProduct(@RequestBody CategoryDto category, @PathVariable Long id) {
         return categoryMapper.categoryToCategoryDto(categoryService.update(categoryMapper.categoryDtoToCategory(category), id));
     }
 
     @Operation(security = @SecurityRequirement(name = "bearer token"))
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     public void deleteProductById(@PathVariable Long id) {
         categoryService.deleteById(id);

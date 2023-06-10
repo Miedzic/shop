@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(final User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        roleRepository.findByName("ROLE_USER").ifPresent(role -> user.setRoles(Collections.singletonList(role))); //zawsze musimy prefix + docelowa nazwa roli ROLE_[rola]
+        roleRepository.findByName("USER").ifPresent(role -> user.setRoles(Collections.singletonList(role))); //zawsze musimy prefix + docelowa nazwa roli ROLE_[rola]
         user.setConfirmationToken(UUID.randomUUID().toString());
         userRepository.save(user);
         Map<String, Object> map = new HashMap<>();

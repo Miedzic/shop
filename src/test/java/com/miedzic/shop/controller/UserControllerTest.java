@@ -120,12 +120,12 @@ class UserControllerTest {
     @Test
     void shouldNotGetByIdUserWhenIsNotAuthenticated() throws Exception {
         mockMvc.perform(get("/api/users/956"))
-                .andExpect(status().isForbidden())
+                .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$").doesNotExist());
     }
 
     @Test
-    @WithMockUser(roles = "ADMIN")
+    @WithMockUser(authorities = "ADMIN")
     void shouldGetByIdWhenUserIsAdmin() throws Exception {
         User user = userRepository.save(User.builder()
                 .email("matim98@tlen.pl")
@@ -167,7 +167,7 @@ class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "ADMIN")
+    @WithMockUser(authorities = "SCOPE_ADMIN")
     void shouldGetUserPage() throws Exception {
         User user = userRepository.save(User.builder()
                 .email("matim98@tlen.pl")
@@ -199,11 +199,11 @@ class UserControllerTest {
     @Test
     void shoulNotDeleteUserWhenIsNotAuthenticated() throws Exception {
         mockMvc.perform(delete("/api/users/956"))
-                .andExpect(status().isForbidden())
+                .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$").doesNotExist());
     }
     @Test
-    @WithMockUser(roles = "ADMIN")
+    @WithMockUser(authorities = "ADMIN")
     void shouldDeleteWhenUserIsAdmin() throws Exception {
         User user = userRepository.save(User.builder()
                 .email("matim98@tlen.pl")
@@ -226,7 +226,7 @@ class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "ADMIN")
+    @WithMockUser(authorities = "ADMIN")
     void shouldUpdateWhenUserIsAdmin() throws Exception{
         User user = userRepository.save(User.builder()
                 .email("matim98@tlen.pl")

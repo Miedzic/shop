@@ -24,7 +24,7 @@ public class UserController {
     private final UserMapper userMapper;
 
     @Operation(security = @SecurityRequirement(name = "bearer token"))
-    @PreAuthorize("isAuthenticated() && (hasRole('ADMIN') || @securityService.hasAccessToUser(#id))")
+    @PreAuthorize("isAuthenticated() && (hasAuthority('ADMIN') || @securityService.hasAccessToUser(#id))")
     @GetMapping("/{id}")
     public UserDto getUserById(@PathVariable Long id) {
         return userMapper.userToUserDto(userService.getById(id));
@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @Operation(security = @SecurityRequirement(name = "bearer token"))
-    @PreAuthorize("isAuthenticated() && (hasRole('ADMIN') || @securityService.hasAccessToUser(#id))")
+    @PreAuthorize("isAuthenticated() && (hasAuthority('ADMIN') || @securityService.hasAccessToUser(#id))")
     // hasAnyRole / isAnonymous
     @PutMapping("/{id}")
     public UserDto updateUser(@RequestBody @Valid UserDto user, @PathVariable Long id) {
@@ -46,14 +46,14 @@ public class UserController {
     }
 
     @Operation(security = @SecurityRequirement(name = "bearer token"))
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     public void deleteUserById(@PathVariable Long id) {
         userService.deleteById(id);
     }
 
     @Operation(security = @SecurityRequirement(name = "bearer token"))
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @GetMapping
     public Page<UserDto> getUserPage(@RequestParam int page, @RequestParam int size) {
         return userService.getPage(PageRequest.of(page, size)).map(userMapper::userToUserDto);

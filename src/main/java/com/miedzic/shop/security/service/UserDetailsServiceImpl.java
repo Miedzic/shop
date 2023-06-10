@@ -1,4 +1,4 @@
-package com.miedzic.shop.security;
+package com.miedzic.shop.security.service;
 
 import com.miedzic.shop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

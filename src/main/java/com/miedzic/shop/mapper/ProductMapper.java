@@ -5,7 +5,7 @@ import com.miedzic.shop.domain.dto.ProductDto;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface ProductMapper {
+public interface ProductMapper extends AuditableMapper<ProductDto, Product> {
     ProductDto productToProductDto(Product product);
 
     Product productDtoToProduct(ProductDto productDto);

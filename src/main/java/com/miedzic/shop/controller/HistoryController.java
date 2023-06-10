@@ -24,7 +24,7 @@ public class HistoryController {
     private final ProductRepository productRepository;
 
     @Operation(security = @SecurityRequirement(name = "bearer token"))
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/user/{id}")
     public Page<UserDto> getUserHistory(@PathVariable Long id, @RequestParam int page, @RequestParam int size) {
         return userRepository.findRevisions(id, PageRequest.of(page, size)).map(historyMapper::revisionToUserDto);
@@ -32,7 +32,7 @@ public class HistoryController {
     }
 
     @Operation(security = @SecurityRequirement(name = "bearer token"))
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/product/{id}")
     public Page<ProductDto> getProductHistory(@PathVariable Long id, @RequestParam int page, @RequestParam int size) {
         return productRepository.findRevisions(id, PageRequest.of(page, size)).map(historyMapper::revisionToProductDto);

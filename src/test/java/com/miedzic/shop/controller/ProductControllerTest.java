@@ -31,7 +31,7 @@ public class ProductControllerTest {
     @Autowired
     private ProductRepository productRepository;
 
-    @WithMockUser(roles = "ADMIN")
+    @WithMockUser(authorities = "ADMIN")
     @Test
     void shouldSaveProduct() throws Exception {
         MockMultipartFile file = new MockMultipartFile("file", "plik.png", MediaType.APPLICATION_OCTET_STREAM_VALUE, new byte[0]);
@@ -58,7 +58,7 @@ public class ProductControllerTest {
 
     }
 
-    @WithMockUser(roles = "ADMIN")
+    @WithMockUser(authorities = "ADMIN")
     @Test
     void shouldNotSaveProductWithoutImage() throws Exception {
         MockMultipartFile product = new MockMultipartFile("product", "", MediaType.APPLICATION_JSON_VALUE, objectMapper.writeValueAsBytes(ProductDto.builder()
@@ -76,7 +76,7 @@ public class ProductControllerTest {
                 .andExpect(jsonPath("$.message").value("Required request part 'file' is not present"));
     }
 
-    @WithMockUser(roles = "ADMIN")
+    @WithMockUser(authorities = "ADMIN")
     @Test
     void shouldNotSaveProductWhenIncorrectData() throws Exception {
         MockMultipartFile file = new MockMultipartFile("file", "plik.csv", MediaType.APPLICATION_OCTET_STREAM_VALUE, new byte[0]);
@@ -101,7 +101,7 @@ public class ProductControllerTest {
                 .andExpect(jsonPath("$[*].message", containsInAnyOrder("must not be blank", "length must be between 0 and 100")));
     }
 
-    @WithMockUser(roles = "ADMIN")
+    @WithMockUser(authorities = "ADMIN")
     @Test
     void shouldNotSaveProductWithInvalidExtension() throws Exception {
         MockMultipartFile file = new MockMultipartFile("file", "plik.xds", MediaType.APPLICATION_OCTET_STREAM_VALUE, new byte[0]);

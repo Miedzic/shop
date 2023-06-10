@@ -32,7 +32,7 @@ public class ProductController {
     }
 
     @Operation(security = @SecurityRequirement(name = "bearer token"))
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     @Validated(Create.class)
     public ProductDto saveProduct(@RequestPart @Valid ProductDto product, @RequestPart @Valid @ExtensionValid(groups = Create.class) MultipartFile file) {
@@ -41,14 +41,14 @@ public class ProductController {
     }
 
     @Operation(security = @SecurityRequirement(name = "bearer token"))
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/{id}")
     public ProductDto updateProduct(@RequestPart @Valid ProductDto product, @PathVariable Long id, @RequestPart @Valid @ExtensionValid(groups = Create.class) MultipartFile file) {
         return productMapper.productToProductDto(productService.update(productMapper.productDtoToProduct(product), id, file));
     }
 
     @Operation(security = @SecurityRequirement(name = "bearer token"))
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     public void deleteProductById(@PathVariable Long id) {
         productService.deleteById(id);

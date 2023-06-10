@@ -1,13 +1,12 @@
 package com.miedzic.shop.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.miedzic.shop.validator.FirstnameValid;
 import com.miedzic.shop.validator.PasswordValid;
 import com.miedzic.shop.validator.group.Create;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -18,10 +17,10 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
+@SuperBuilder
 @PasswordValid(groups = Create.class)
 //@FirstnameValid
-public class UserDto {
+public class UserDto extends AuditableDto {
     @Null(groups = Create.class)
     private Long id;
     private Integer revisionNumber;

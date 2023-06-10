@@ -5,13 +5,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
+
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class TemplateDto extends AuditableDto {
-    private Long id;
-    private String name;
-    private String body;
-    private String subject;
+public abstract class AuditableDto {
+
+    private LocalDateTime createdDate;
+
+    private String createdBy;
+
+    private LocalDateTime lastModifiedDate;
+
+    private String lastModifiedBy;
 }

@@ -25,10 +25,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Builder
-@EntityListeners(AuditingEntityListener.class)
 @Audited
 @Table(indexes = @Index(name = "idx_name", columnList = "name", unique = true))
-public class Product implements IdentifiedDataSerializable {
+public class Product extends Auditable implements IdentifiedDataSerializable  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,14 +35,6 @@ public class Product implements IdentifiedDataSerializable {
     private String category;
     @NotNull
     private Long cost;
-    @CreatedDate
-    private LocalDateTime createdDate;
-    @CreatedBy
-    private String createdBy;
-    @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
-    @LastModifiedBy
-    private String lastModifiedBy;
     private String path;
 
     @Override
