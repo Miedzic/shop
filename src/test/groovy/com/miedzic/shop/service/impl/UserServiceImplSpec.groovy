@@ -11,7 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import spock.lang.Specification
 
-import javax.persistence.EntityNotFoundException
+import jakarta.persistence.EntityNotFoundException
 import java.time.LocalDateTime
 
 class UserServiceImplSpec extends Specification {

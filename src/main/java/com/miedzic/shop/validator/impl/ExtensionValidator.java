@@ -4,8 +4,8 @@ import com.miedzic.shop.domain.dto.ProductDto;
 import com.miedzic.shop.validator.ExtensionValid;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class ExtensionValidator implements ConstraintValidator<ExtensionValid, MultipartFile> {
 

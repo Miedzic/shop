@@ -1,3 +1,4 @@
+/*
 package com.miedzic.shop.service.impl;
 
 import antlr.Token;
@@ -42,3 +43,4 @@ public class LoginServiceImpl implements LoginService {
         return new TokenDto(token);
     }
 }
+*/

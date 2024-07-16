@@ -1,6 +1,5 @@
 package com.miedzic.shop.security;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 

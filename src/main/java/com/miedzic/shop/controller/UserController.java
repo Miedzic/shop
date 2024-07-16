@@ -1,5 +1,6 @@
 package com.miedzic.shop.controller;
 
+import com.miedzic.shop.domain.dao.FieldErrorDto;
 import com.miedzic.shop.domain.dto.UserDto;
 import com.miedzic.shop.mapper.UserMapper;
 import com.miedzic.shop.service.UserService;
@@ -13,7 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/users")
@@ -62,4 +63,10 @@ public class UserController {
     public void confirmUser(@RequestParam String token ){
         userService.confirmByToken(token);
     }
+
+    @PostMapping("/test")
+    public void test(@RequestBody FieldErrorDto fieldErrorDto){
+
+    }
+    //some weird magic :?
 }

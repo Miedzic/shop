@@ -3,8 +3,8 @@ package com.miedzic.shop.validator;
 import com.miedzic.shop.validator.impl.ExtensionValidator;
 import com.miedzic.shop.validator.impl.FirstnameLengthValidator;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented

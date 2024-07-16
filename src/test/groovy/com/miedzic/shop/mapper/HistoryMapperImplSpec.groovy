@@ -16,7 +16,7 @@ class HistoryMapperImplSpec extends Specification {
 
     def "should make revision to UserDto"() {
         given:
-        def user = new User(10, "Mateusz", "Dziedzic", "matim98@tlen.pl", "123456", true, [new Role(1, "coś")], LocalDateTime.now(), "Mati", LocalDateTime.now(), "Mati")
+        def user = new User(10, "Mateusz", "Dziedzic", "matim98@tlen.pl", "123456", true, [new Role(1, "coś")],"x")
         def revision = Revision.of(new DefaultRevisionMetadata(new DefaultRevisionEntity()), user)
 
         when:
@@ -34,7 +34,7 @@ class HistoryMapperImplSpec extends Specification {
     //todo drugie
     def "should make revision to ProductDto"(){
         given:
-        def product = new Product(10,"szafa","meble",100, LocalDateTime.now(),"Mati",LocalDateTime.now(),"Mati","nope")
+        def product = new Product(10,"szafa","meble",100,"path")
         def revision = Revision.of(new DefaultRevisionMetadata(new DefaultRevisionEntity()),product)
         when:
         def result = historyMapperImpl.revisionToProductDto(revision)

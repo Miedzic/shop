@@ -1,3 +1,4 @@
+/*
 package com.miedzic.shop.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,3 +48,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //aplikacja bezstanowa
     }
 }
+*/

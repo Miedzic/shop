@@ -1,4 +1,4 @@
-package com.miedzic.shop.domain.dto;
+package com.miedzic.shop.domain.dao;
 
 
 import lombok.AllArgsConstructor;
